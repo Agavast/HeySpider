@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
+
+<title>Mr.Spider 对你有话说</title>
+
+<style>
+
+/* =========================================================
+                         基础
+========================================================= */
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+
+    margin:0;
+    padding:0;
+
+    width:100%;
+    height:100%;
+
+    overflow:hidden;
+}
+
+body{
+
+    min-height:100vh;
+    min-height:100svh;
+
+    font-family:
+        "Microsoft YaHei",
+        "PingFang SC",
+        "Noto Sans SC",
+        Arial,
+        sans-serif;
+
+    color:#263238;
+
+    position:relative;
+
+    background:
+
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(255,211,92,.72),
+            transparent 27%
+        ),
+
+        radial-gradient(
+            circle at 85% 18%,
+            rgba(255,151,201,.5),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 50% 105%,
+            rgba(105,210,255,.5),
+            transparent 32%
+        ),
+
+        linear-gradient(
+            135deg,
+            #fff8df 0%,
+            #fff4f8 48%,
+            #edfaff 100%
+        );
+}
+
+
+/* =========================================================
+                         背景星点
+========================================================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:.28;
+
+    background-image:
+
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.95) 0 2px,
+            transparent 3px
+        );
+
+    background-size:38px 38px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 85%
+        );
+}
+
+
+/* =========================================================
+                         主容器
+========================================================= */
+
+.app{
+
+    width:min(650px,92vw);
+
+    height:100vh;
+    height:100svh;
+
+    margin:0 auto;
+
+    padding:
+        18px 0
+        20px;
+
+    position:relative;
+
+    z-index:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+}
+
+
+/* =========================================================
+                         标题
+========================================================= */
+
+.header{
+
+    text-align:center;
+
+    flex-shrink:0;
+
+    margin-bottom:14px;
+}
+
+
+.kicker{
+
+    display:inline-block;
+
+    padding:4px 11px;
+
+    border-radius:999px;
+
+    background:#ffffffc7;
+
+    border:2px solid #263238;
+
+    box-shadow:
+        2px 2px 0 #263238;
+
+    font-size:10px;
+
+    font-weight:900;
+
+    letter-spacing:1.3px;
+
+    transform:rotate(-2deg);
+
+    margin-bottom:8px;
+}
+
+
+h1{
+
+    margin:0;
+
+    font-size:
+        clamp(27px,5vw,43px);
+
+    line-height:.98;
+
+    font-weight:1000;
+
+    letter-spacing:-1.8px;
+
+    color:#263238;
+
+    text-shadow:
+        2.5px 2.5px 0 #ffd85c;
+}
+
+
+.subtitle{
+
+    margin-top:8px;
+
+    font-size:12px;
+
+    line-height:1.4;
+
+    color:#66747b;
+
+    font-weight:700;
+}
+
+
+/* =========================================================
+                     抽取区域
+========================================================= */
+
+.machine{
+
+    width:100%;
+
+    padding:12px;
+
+    background:
+        rgba(255,255,255,.78);
+
+    border:
+        3px solid #263238;
+
+    border-radius:21px;
+
+    box-shadow:
+        6px 7px 0 #263238;
+
+    backdrop-filter:blur(8px);
+
+    flex-shrink:1;
+
+    min-height:0;
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+
+/* =========================================================
+                         图片框
+========================================================= */
+
+.image-wrap{
+
+    position:relative;
+
+    width:100%;
+
+    height:
+        min(
+            54vh,
+            510px
+        );
+
+    height:
+        min(
+            54svh,
+            510px
+        );
+
+    min-height:260px;
+
+    overflow:hidden;
+
+    border-radius:14px;
+
+    background:#e8eef0;
+
+    border:
+        3px solid #263238;
+
+    flex-shrink:1;
+}
+
+
+/* =========================================================
+                         图片
+========================================================= */
+
+#mainImage{
+
+    width:100%;
+
+    height:100%;
+
+    display:block;
+
+    object-fit:contain;
+
+    background:#e8eef0;
+
+    transition:
+        transform .12s ease,
+        filter .12s ease;
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+}
+
+
+/* 快速闪动 */
+
+.spinning #mainImage{
+
+    transform:
+        scale(1.018);
+
+    filter:
+        saturate(1.12)
+        brightness(1.03);
+}
+
+
+/* =========================================================
+                       图片角标
+========================================================= */
+
+.image-number{
+
+    position:absolute;
+
+    top:9px;
+
+    right:9px;
+
+    padding:5px 9px;
+
+    background:#ffffffeb;
+
+    border:2px solid #263238;
+
+    border-radius:999px;
+
+    font-size:10px;
+
+    font-weight:1000;
+
+    box-shadow:
+        2px 2px 0 #263238;
+
+    z-index:3;
+}
+
+
+/* =========================================================
+                         文案
+========================================================= */
+
+.caption-box{
+
+    margin-top:10px;
+
+    min-height:60px;
+
+    padding:
+        8px 14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    background:#fff9cf;
+
+    border:
+        2px dashed #263238;
+
+    border-radius:13px;
+
+    transform:rotate(.5deg);
+
+    box-shadow:
+        3px 3px 0 rgba(38,50,56,.15);
+
+    flex-shrink:0;
+}
+
+
+#caption{
+
+    margin:0;
+
+    font-size:
+        clamp(17px,3.8vw,25px);
+
+    line-height:1.25;
+
+    font-weight:1000;
+
+    color:#263238;
+
+    transition:
+        opacity .08s ease;
+}
+
+
+/* =========================================================
+                      抽取按钮
+========================================================= */
+
+.controls{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-top:12px;
+
+    flex-shrink:0;
+}
+
+
+#drawButton{
+
+    width:min(280px,78%);
+
+    height:50px;
+
+    border:
+        3px solid #263238;
+
+    border-radius:15px;
+
+    background:#ff6f91;
+
+    color:white;
+
+    font-family:inherit;
+
+    font-size:17px;
+
+    font-weight:1000;
+
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    box-shadow:
+        4px 5px 0 #263238;
+
+    transition:
+        transform .08s ease,
+        box-shadow .08s ease,
+        background .2s ease;
+
+    user-select:none;
+
+    touch-action:manipulation;
+}
+
+
+#drawButton:hover{
+
+    background:#ff5d83;
+
+    transform:
+        translateY(-2px);
+}
+
+
+#drawButton:active{
+
+    transform:
+        translate(3px,4px);
+
+    box-shadow:
+        1px 1px 0 #263238;
+}
+
+
+#drawButton.stop{
+
+    background:#42c6a5;
+}
+
+
+/* =========================================================
+                       提示文字
+========================================================= */
+
+.hint{
+
+    text-align:center;
+
+    margin-top:8px;
+
+    font-size:10px;
+
+    line-height:1.2;
+
+    color:#7a888e;
+
+    font-weight:700;
+
+    flex-shrink:0;
+}
+
+
+/* =========================================================
+                       揭晓动画
+========================================================= */
+
+.result-pop{
+
+    animation:
+        resultPop .48s cubic-bezier(.2,1.5,.4,1);
+}
+
+
+@keyframes resultPop{
+
+    0%{
+
+        transform:
+            scale(.96)
+            rotate(-.7deg);
+
+        opacity:.7;
+    }
+
+    55%{
+
+        transform:
+            scale(1.015)
+            rotate(.3deg);
+
+        opacity:1;
+    }
+
+    100%{
+
+        transform:
+            scale(1)
+            rotate(0);
+
+        opacity:1;
+    }
+}
+
+
+/* =========================================================
+                     小星星装饰
+========================================================= */
+
+.spark{
+
+    position:fixed;
+
+    pointer-events:none;
+
+    font-size:20px;
+
+    animation:
+        floatSpark 3.5s ease-in-out infinite;
+
+    opacity:.65;
+
+    z-index:0;
+}
+
+
+.spark.s1{
+
+    left:5%;
+
+    top:20%;
+}
+
+
+.spark.s2{
+
+    right:6%;
+
+    top:32%;
+
+    animation-delay:1s;
+}
+
+
+.spark.s3{
+
+    left:8%;
+
+    bottom:14%;
+
+    animation-delay:2s;
+}
+
+
+.spark.s4{
+
+    right:10%;
+
+    bottom:9%;
+
+    animation-delay:.5s;
+}
+
+
+@keyframes floatSpark{
+
+    0%,100%{
+
+        transform:
+            translateY(0)
+            rotate(0deg);
+    }
+
+    50%{
+
+        transform:
+            translateY(-10px)
+            rotate(15deg);
+    }
+}
+
+
+/* =========================================================
+                    矮屏电脑 / 小笔记本
+========================================================= */
+
+@media
+(max-height:800px)
+and (min-width:601px){
+
+    .app{
+
+        padding-top:10px;
+        padding-bottom:12px;
+    }
+
+    .header{
+
+        margin-bottom:9px;
+    }
+
+    .kicker{
+
+        margin-bottom:5px;
+
+        padding:3px 9px;
+    }
+
+    h1{
+
+        font-size:32px;
+    }
+
+    .subtitle{
+
+        margin-top:5px;
+
+        font-size:11px;
+    }
+
+    .machine{
+
+        padding:9px;
+    }
+
+    .image-wrap{
+
+        height:48vh;
+        height:48svh;
+
+        min-height:220px;
+    }
+
+    .caption-box{
+
+        margin-top:7px;
+
+        min-height:52px;
+    }
+
+    .controls{
+
+        margin-top:8px;
+    }
+
+    #drawButton{
+
+        height:44px;
+
+        font-size:16px;
+    }
+
+    .hint{
+
+        margin-top:5px;
+    }
+}
+
+
+/* =========================================================
+                         手机端
+========================================================= */
+
+@media(max-width:600px){
+
+    .app{
+
+        width:92vw;
+
+        padding:
+            12px 0
+            14px;
+    }
+
+
+    .header{
+
+        margin-bottom:10px;
+    }
+
+
+    .kicker{
+
+        padding:3px 9px;
+
+        font-size:9px;
+
+        margin-bottom:6px;
+
+        box-shadow:
+            2px 2px 0 #263238;
+    }
+
+
+    h1{
+
+        font-size:
+            clamp(25px,8vw,34px);
+
+        letter-spacing:-1.3px;
+
+        text-shadow:
+            2px 2px 0 #ffd85c;
+    }
+
+
+    .subtitle{
+
+        margin-top:6px;
+
+        font-size:11px;
+
+        padding:0 8px;
+    }
+
+
+    .machine{
+
+        padding:9px;
+
+        border-radius:18px;
+
+        box-shadow:
+            5px 6px 0 #263238;
+    }
+
+
+    .image-wrap{
+
+        height:
+            min(
+                48svh,
+                390px
+            );
+
+        min-height:220px;
+
+        border-radius:12px;
+    }
+
+
+    .image-number{
+
+        top:7px;
+
+        right:7px;
+
+        padding:4px 7px;
+
+        font-size:9px;
+    }
+
+
+    .caption-box{
+
+        min-height:58px;
+
+        margin-top:8px;
+
+        padding:
+            7px 10px;
+
+        border-radius:11px;
+    }
+
+
+    #caption{
+
+        font-size:
+            clamp(16px,5vw,21px);
+    }
+
+
+    .controls{
+
+        margin-top:9px;
+    }
+
+
+    #drawButton{
+
+        width:82%;
+
+        height:48px;
+
+        min-height:48px;
+
+        font-size:17px;
+
+        border-radius:14px;
+
+        box-shadow:
+            4px 4px 0 #263238;
+    }
+
+
+    .hint{
+
+        margin-top:6px;
+
+        font-size:9px;
+    }
+
+
+    .spark{
+
+        font-size:16px;
+    }
+}
+
+
+/* =========================================================
+              超矮手机 / 横屏手机 / 小窗口
+========================================================= */
+
+@media(max-height:700px){
+
+    .app{
+
+        padding-top:8px;
+        padding-bottom:9px;
+    }
+
+
+    .header{
+
+        margin-bottom:7px;
+    }
+
+
+    .kicker{
+
+        display:none;
+    }
+
+
+    h1{
+
+        font-size:26px;
+    }
+
+
+    .subtitle{
+
+        margin-top:4px;
+
+        font-size:10px;
+    }
+
+
+    .machine{
+
+        padding:7px;
+
+        border-radius:15px;
+
+        box-shadow:
+            4px 5px 0 #263238;
+    }
+
+
+    .image-wrap{
+
+        height:42svh;
+
+        min-height:190px;
+
+        border-radius:10px;
+    }
+
+
+    .caption-box{
+
+        min-height:48px;
+
+        margin-top:6px;
+
+        padding:5px 8px;
+    }
+
+
+    #caption{
+
+        font-size:15px;
+    }
+
+
+    .controls{
+
+        margin-top:6px;
+    }
+
+
+    #drawButton{
+
+        height:42px;
+
+        min-height:42px;
+
+        font-size:15px;
+    }
+
+
+    .hint{
+
+        margin-top:4px;
+    }
+}
+
+
+/* =========================================================
+                     极窄手机
+========================================================= */
+
+@media(max-width:360px){
+
+    .app{
+
+        width:94vw;
+    }
+
+
+    h1{
+
+        font-size:24px;
+    }
+
+
+    .subtitle{
+
+        font-size:9px;
+    }
+
+
+    .image-wrap{
+
+        height:40svh;
+
+        min-height:180px;
+    }
+
+
+    .caption-box{
+
+        min-height:45px;
+    }
+
+
+    #caption{
+
+        font-size:14px;
+    }
+
+
+    #drawButton{
+
+        width:85%;
+
+        height:40px;
+
+        min-height:40px;
+
+        font-size:14px;
+    }
+}
+/* =========================================================
+                       底部声明
+========================================================= */
+
+.disclaimer{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:6px;
+
+    transform:translateX(-50%);
+
+    width:100%;
+
+    text-align:center;
+
+    font-size:9px;
+
+    line-height:1.2;
+
+    color:rgba(38,50,56,.38);
+
+    font-weight:500;
+
+    pointer-events:none;
+
+    z-index:10;
+
+    white-space:nowrap;
+}
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+                         装饰
+===================================================== -->
+
+<div class="spark s1">✦</div>
+<div class="spark s2">✧</div>
+<div class="spark s3">★</div>
+<div class="spark s4">✦</div>
+<div class="disclaimer">
+    图片均为AI生成，仅供娱乐，无不良引导
+</div>
+
+<div class="app">
+
+
+    <!-- =================================================
+                            标题
+    ================================================== -->
+
+    <header class="header">
+
+        <div class="kicker">
+            SPIDER'S MESSAGE
+        </div>
+
+        <h1>
+            Mr.Spider<br>
+            对你有话说
+        </h1>
+
+        <div class="subtitle">
+            至于主任今天想说什么……抽到哪张算哪张。
+        </div>
+
+    </header>
+
+
+    <!-- =================================================
+                         抽取机器
+    ================================================== -->
+
+    <main class="machine">
+
+
+        <!-- 图片 -->
+
+        <div class="image-wrap"
+             id="imageWrap">
+
+            <img
+                id="mainImage"
+                src="0.png"
+                alt="Mr.Spider">
+
+            <div
+                class="image-number"
+                id="imageNumber">
+
+                READY
+
+            </div>
+
+        </div>
+
+
+        <!-- 文案 -->
+
+        <div class="caption-box">
+
+            <p id="caption">
+                恭喜你赤到石了！
+            </p>
+
+        </div>
+
+
+        <!-- 按钮 -->
+
+        <div class="controls">
+
+            <button
+                id="drawButton"
+                type="button">
+
+                开始抽取Spider幸运寄语
+            </button>
+
+        </div>
+
+
+        <div class="hint"
+             id="hint">
+
+            再点一次，就停在这一刻
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+              1. 开场封面图
+=========================================================
+
+   0.png 只负责：
+
+   第一次打开网页时显示。
+
+   它不会参与后面的抽奖循环。
+
+========================================================= */
+
+const coverImage =
+    "0.png";
+
+
+/* =========================================================
+                    2. 开场文案
+=========================================================
+
+   ↓↓↓ 把这里改成你给 0.png 准备的文案 ↓↓↓
+
+========================================================= */
+
+const coverCaption =
+    "恭喜你赤到石了！";
+
+
+/* =========================================================
+                    3. 正式抽奖图片
+=========================================================
+
+   注意：
+
+   这里故意从 1 开始。
+
+   0.png 永远不会进入这个数组。
+
+========================================================= */
+
+const images = [];
+
+for(let i = 1; i <= 16; i++){
+
+    images.push(
+        `B (${i}).png`
+    );
+
+}
+
+
+/* =========================================================
+                    4. 16 条正式文案
+========================================================= */
+
+const captions = [
+
+    "不许羡慕，这是专属主任的生日SPA",
+
+    "网上说说得了，现实里谁不想当一回蜘蛛妖呢",
+
+    "你说的一点都对",
+
+    "你的假期生活belike：",
+
+    "小伙子想学跳舞吗，我教你呀~",
+
+    "你也是庄子？",
+
+    "哎呦，不错呦~~",
+
+    "中国人能飞~~~",
+
+    "举水枪瞄准ing，小坏蛋不许逃跑喔 (≧∇≦)",
+
+    "小伙子注意身体",
+
+    "今天你最大！",
+
+    "去卖暑假作业喽~~（你不会写了吧🤪🤪🤪）",
+
+    "没想到吧！（远离赌博，从我做起！）",
+
+    "小伙子，眼光不错啊~~",
+
+    "小伙子身材不错~",
+
+    "小小瑶祝你生日快乐"
+
+];
+
+
+/* =========================================================
+                    5. 预加载正式图片
+=========================================================
+
+   这里只预加载 B (1) ～ B (16)。
+
+   0.png 不需要进入抽奖缓存。
+
+========================================================= */
+
+const preloadedImages = [];
+
+images.forEach(src => {
+
+    const img = new Image();
+
+    img.src = src;
+
+    preloadedImages.push(img);
+
+});
+
+
+/* =========================================================
+                       6. 获取元素
+========================================================= */
+
+const mainImage =
+    document.getElementById("mainImage");
+
+const caption =
+    document.getElementById("caption");
+
+const imageNumber =
+    document.getElementById("imageNumber");
+
+const imageWrap =
+    document.getElementById("imageWrap");
+
+const drawButton =
+    document.getElementById("drawButton");
+
+const hint =
+    document.getElementById("hint");
+
+
+/* =========================================================
+                       7. 状态
+========================================================= */
+
+/*
+   currentIndex：
+
+   0 = B (1).png
+   1 = B (2).png
+   ...
+   15 = B (16).png
+
+   注意：
+
+   这里的 0 已经不是 0.png。
+   0.png 完全独立存在。
+*/
+
+let currentIndex = 0;
+
+let spinning = false;
+
+let timer = null;
+
+
+/* =========================================================
+                8. 显示正式抽奖项目
+========================================================= */
+
+function showItem(index){
+
+    currentIndex = index;
+
+    mainImage.src =
+        images[index];
+
+    caption.textContent =
+        captions[index];
+
+    imageNumber.textContent =
+        String(index + 1).padStart(2,"0")
+        + " / 16";
+}
+
+
+/* =========================================================
+                9. 显示开场封面
+========================================================= */
+
+function showCover(){
+
+    /*
+       第一次打开网页时：
+
+       0.png
+       +
+       coverCaption
+    */
+
+    mainImage.src =
+        coverImage;
+
+    caption.textContent =
+        coverCaption;
+
+    imageNumber.textContent =
+        "READY";
+}
+
+
+/* =========================================================
+                       10. 快速闪动
+========================================================= */
+
+function spin(){
+
+    if(!spinning){
+        return;
+    }
+
+
+    /*
+        正式抽奖从 B (1) 开始。
+
+        因为初始化时 currentIndex = 0，
+
+        第一次 spin：
+
+        0 → 1
+
+        对应：
+
+        B (1).png → B (2).png
+
+        所以这里需要特殊处理第一次启动。
+    */
+
+    currentIndex =
+        (currentIndex + 1) % 16;
+
+
+    showItem(currentIndex);
+
+
+    /*
+        每张图停留 50ms。
+
+        16张：
+
+        16 × 50ms
+        = 800ms / 圈
+    */
+
+    timer =
+        setTimeout(
+            spin,
+            50
+        );
+}
+
+
+/* =========================================================
+                       11. 开始抽取
+========================================================= */
+
+function startSpin(){
+
+    if(spinning){
+        return;
+    }
+
+
+    spinning = true;
+
+
+    /*
+       关键：
+
+       不管当前显示的是 0.png，
+       第一次抽取都直接从 B (1).png 开始。
+
+       因此不会出现：
+
+       0.png → B(1)
+
+       而是直接：
+
+       B(1) → B(2) → ... → B(16)
+    */
+
+    currentIndex = 0;
+
+    showItem(0);
+
+
+    drawButton.textContent =
+        "停！";
+
+
+    drawButton.classList.add(
+        "stop"
+    );
+
+
+    hint.textContent =
+        "主任正在思考……";
+
+
+    imageWrap.classList.add(
+        "spinning"
+    );
+
+
+    /*
+       先显示 B(1)，
+       然后继续进入循环。
+    */
+
+    timer =
+        setTimeout(
+            spin,
+            50
+        );
+}
+
+
+/* =========================================================
+                       12. 停止
+========================================================= */
+
+function stopSpin(){
+
+    if(!spinning){
+        return;
+    }
+
+
+    spinning = false;
+
+
+    clearTimeout(timer);
+
+    timer = null;
+
+
+    drawButton.textContent =
+        "再抽一次";
+
+
+    drawButton.classList.remove(
+        "stop"
+    );
+
+
+    hint.textContent =
+        "主任已经说完了。";
+
+
+    imageWrap.classList.remove(
+        "spinning"
+    );
+
+
+    /*
+        揭晓动画
+    */
+
+    imageWrap.classList.remove(
+        "result-pop"
+    );
+
+
+    void imageWrap.offsetWidth;
+
+
+    imageWrap.classList.add(
+        "result-pop"
+    );
+
+
+    /*
+        文案轻微淡入
+    */
+
+    caption.style.opacity =
+        "0";
+
+
+    setTimeout(() => {
+
+        caption.style.opacity =
+            "1";
+
+    },80);
+
+}
+
+
+/* =========================================================
+                       13. 点击按钮
+========================================================= */
+
+drawButton.addEventListener(
+    "click",
+    () => {
+
+        if(spinning){
+
+            stopSpin();
+
+        }else{
+
+            startSpin();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+                    14. 键盘支持
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if(
+            event.code === "Space" ||
+            event.code === "Enter"
+        ){
+
+            event.preventDefault();
+
+
+            if(spinning){
+
+                stopSpin();
+
+            }else{
+
+                startSpin();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+                  15. 防止图片拖拽
+========================================================= */
+
+mainImage.addEventListener(
+    "dragstart",
+    event => {
+
+        event.preventDefault();
+
+    }
+);
+
+
+/* =========================================================
+                       16. 初始化
+=========================================================
+
+   页面第一次打开：
+
+   0.png
+   +
+   coverCaption
+
+   不会显示 B (1) 的文案。
+
+========================================================= */
+
+showCover();
+
+</script>
+
+</body>
+</html>
